@@ -10,6 +10,16 @@ const postAddHome = (req, res, next) => {
   res.render("host/homeAdded", { pageTitle: "Home Added Successfully" });
 };
 
+
+const getHostHomes = (req, res, next) => {
+  const registeredHomes = Home.fetchAll((registeredHomes) =>
+    res.render("host/host-home-list", {
+      registeredHomes: registeredHomes,
+      pageTitle: "Host Homes list",
+    })
+  );
+};
 exports.getAddHome = getAddHome;
 exports.postAddHome = postAddHome;
+exports.getHostHomes=getHostHomes;
 // exports.registeredHomes=registeredHomes;

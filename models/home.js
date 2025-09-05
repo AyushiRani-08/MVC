@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/pathUtil");
+const filepath = path.join(rootDir, "data", "home.json");
 
 let registeredHomes = [];
 
@@ -13,9 +14,9 @@ module.exports = class Home {
     this.photoUrl = photoUrl;
   }
   save() {
+    this.id=Math.random().toString();
     Home.fetchAll((registeredHomes) => {
       registeredHomes.push(this);
-      const filepath = path.join(rootDir, "data", "home.json");
       fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
         if (err) console.error("Error writing file:", err);
         else console.log("File updated successfully");
@@ -29,5 +30,11 @@ module.exports = class Home {
       console.log("file read", err, data);
       callback(!err ? JSON.parse(data) : []);
     });
+  }
+  static findById(homeId,callback){
+    this.fetchAll(homes => {
+      const homeFound=homes.find((home) => home.id ===homeId);
+      callback(homeFound);
+    })
   }
 };
