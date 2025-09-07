@@ -3,7 +3,6 @@ const path = require("path");
 const rootDir = require("../utils/pathUtil");
 const filepath = path.join(rootDir, "data", "home.json");
 
-let registeredHomes = [];
 
 module.exports = class Home {
   constructor(houseName, price, location, rating, photoUrl) {
@@ -14,20 +13,26 @@ module.exports = class Home {
     this.photoUrl = photoUrl;
   }
   save() {
-    this.id=Math.random().toString();
     Home.fetchAll((registeredHomes) => {
-      registeredHomes.push(this);
+      if(this.id){
+        registeredHomes=registeredHomes.map(home =>  home.id === this.id ? this :home);
+      }else{
+        this.id=Math.random().toString();
+        registeredHomes.push(this);
+      }
+
       fs.writeFile(filepath, JSON.stringify(registeredHomes), (err) => {
         if (err) console.error("Error writing file:", err);
         else console.log("File updated successfully");
       });
     });
+    
+    
   }
   static fetchAll(callback) {
     // async operation hence gives errors
     const filepath = path.join(rootDir, "data", "home.json");
     fs.readFile(filepath, (err, data) => {
-      console.log("file read", err, data);
       callback(!err ? JSON.parse(data) : []);
     });
   }
