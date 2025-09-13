@@ -7,6 +7,7 @@ const getHomes = (req, res, next) => {
     res.render("store/home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Homes list",
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
@@ -18,6 +19,7 @@ const getFavourite = (req, res, next) => {
       res.render("store/favourite", {
         favwithDetails: favouriteHomes,
         pageTitle: "favourites",
+        isLoggedIn: req.isLoggedIn
       });
     });
   // Favourite.find().then((favourites) => {
@@ -35,10 +37,12 @@ const getFavourite = (req, res, next) => {
   // });
 };
 const getIndex = (req, res, next) => {
+  console.log("Session Value:", req.session);
   Home.find().then((registeredHomes) => {
     res.render("store/index", {
       registeredHomes: registeredHomes,
       pageTitle: "index",
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
@@ -54,6 +58,7 @@ const getHomeDetails = (req, res, next) => {
       res.render("store/home-detail", {
         home: home,
         pageTitle: "index",
+        isLoggedIn: req.isLoggedIn
       });
     }
   });
@@ -62,6 +67,7 @@ const getHomeDetails = (req, res, next) => {
 exports.getBookings = (req, res, next) => {
   res.render("store/bookings", {
     pageTitle: "My Bookings",
+    isLoggedIn: req.isLoggedIn
   });
 };
 exports.postAddToFavourite = (req, res, next) => {

@@ -3,6 +3,7 @@ const getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
     editing: false,
+    isLoggedIn: req.isLoggedIn
   });
 };
 exports.getEditHome = (req, res, next) => {
@@ -19,6 +20,7 @@ exports.getEditHome = (req, res, next) => {
       home: home,
       pageTitle: "Edit your airbnb",
       editing: editing,
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
@@ -70,6 +72,7 @@ const getHostHomes = (req, res, next) => {
     res.render("host/host-home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes list",
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
