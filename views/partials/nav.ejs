@@ -9,57 +9,43 @@
         >
       </li>
       <% if(isLoggedIn)  { %>
-      <li>
-        <a
-          href="/home"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Homes-List</a
-        >
-      </li>
-      <li>
-        <a
-          href="/favourite"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Favourites</a
-        >
-      </li>
-      <li>
-        <a
-          href="/bookings"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Bookings</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/host-home-list"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Host Homes</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/add-home"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Add Home</a
-        >
-      </li>
-      <% } %>
-      <% if(!isLoggedIn)  { %>
-      <li>
-        <a
-          href="/login"
-          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-          >Login</a
-        >
-      </li>
-      <li>
-        <a href="/signup"
-        class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
-        >Sign In</a>
-      </li>
-      <% } else { %>
-        <form action="/logout" method="POST">
+        <% if(user && user.userType === 'guest') { %>
+          <li>
+            <a
+              href="/home"
+              class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+              >Homes</a > 
+          </li>
+          <li>
+            <a
+              href="/favourite"
+              class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+              >Favourites</a>
+      
+          </li>
+          <li>
+            <a
+              href="/bookings"
+              class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+            >Bookings</a>
+          </li>
+        <% }else if(user && user.userType === 'host') { %>
+          <li>
+            <a
+              href="/host/host-home-list"
+              class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+              >Host Homes</a
+            >
+          </li>
+          <li>
+            <a
+              href="/host/add-home"
+              class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+              >Add Home</a
+            >
+          </li> 
+          <% } %>
+          <form action="/logout" method="POST">
           <button 
            type="submit"
            class="hover:bg-red-400  rounded transition duration-300">
@@ -71,8 +57,25 @@
         class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
         >Sign Out</a>
       </li>
-
+      <%   }else   { %>
+        <% if(!isLoggedIn) { %>
+         <li>
+        <a
+          href="/login"
+          class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+          >Login</a
+        >
+      </li>
+      <li>
+        <a href="/signup"
+        class="hover:bg-red-400 py-2 px-4 rounded transition duration-300"
+        >Sign In</a>
+      </li>
       <% } %>
+      
+      <% } %>
+        
+
 
 
     </ul>

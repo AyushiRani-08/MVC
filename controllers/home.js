@@ -1,9 +1,11 @@
 const Home = require("../models/home");
+const user = require("../models/user");
 const getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
     editing: false,
-    isLoggedIn: req.isLoggedIn
+    isLoggedIn: req.isLoggedIn,
+    user:req.session.user,
   });
 };
 exports.getEditHome = (req, res, next) => {
@@ -20,7 +22,8 @@ exports.getEditHome = (req, res, next) => {
       home: home,
       pageTitle: "Edit your airbnb",
       editing: editing,
-      isLoggedIn: req.isLoggedIn
+      isLoggedIn: req.isLoggedIn,
+      user:req.session.user,
     });
   });
 };
@@ -72,7 +75,8 @@ const getHostHomes = (req, res, next) => {
     res.render("host/host-home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes list",
-      isLoggedIn: req.isLoggedIn
+      isLoggedIn: req.isLoggedIn,
+      user:req.session.user,
     });
   });
 };

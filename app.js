@@ -14,6 +14,7 @@ const rootDir = require("./utils/pathUtil");
 const {mongoConnect}=require('./utils/databaseUtil');
 const mongoose = require('mongoose');
 const DB_PATH="mongodb+srv://root:root@ayushirani.fahzki9.mongodb.net/airbnb?retryWrites=true&w=majority&appName=AyushiRani";
+const errorsController = require("./controllers/errors");
 
 
 const app = express();
@@ -51,6 +52,7 @@ app.use("/host", (req,res,next) => {
 app.use("/host", hostRouter);
 
 app.use(express.static(path.join(rootDir, 'public')));
+app.use(errorsController.pageNotFound);
 
 app.use((req, res, next) => {
   res.status(404).render('404', {pageTitle: 'Page Not Found',isLoggedIn:req.isLoggedIn});
