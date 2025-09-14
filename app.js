@@ -5,6 +5,7 @@ const path = require('path');
 const express = require('express');
 const session=require('express-session');
 const MongoDBStore=require('connect-mongodb-session')(session);
+const multer=require('multer');
 
 //Local Module
 const storeRouter = require("./routes/storeRouter")
@@ -27,7 +28,30 @@ const store=new MongoDBStore({
   collection:'sessions'
 });
 
-app.use(express.urlencoded({ extended: true }));
+const storage=multer.diskStorage({
+  destination:(req,file,cb) => {
+    cb(null,'uploads/');  
+  },
+  filename:(req,file,cb) => {
+    cb(null,Date.now() + '-' + file.originalname);
+  }
+})
+const fileFilter=(req,file,cb) => {
+  if(file.mimetype==='image/png' || file.mimetype==='image/jpg' || file.mimetype==='image/jpeg'){
+    cb(null,true);  
+  }else{
+    cb(null,false);
+  }
+}
+
+app.use(express.urlencoded());
+app.use(multer({storage,fileFilter}).single('photo')); //for parsing multipart/form-data
+app.use(express.static(path.join(rootDir, 'public')));
+app.use('/uploads',express.static(path.join(rootDir,'uploads'))); //to serve images statically
+app.use('/host/uploads',express.static(path.join(rootDir,'uploads'))); //to serve images statically
+app.use('/homes/uploads',express.static(path.join(rootDir,'uploads'))); //to serve images statically
+
+
 
 app.use(session({
   secret:'Airbnb',
@@ -51,14 +75,14 @@ app.use("/host", (req,res,next) => {
 })
 app.use("/host", hostRouter);
 
-app.use(express.static(path.join(rootDir, 'public')));
+
 app.use(errorsController.pageNotFound);
 
 app.use((req, res, next) => {
   res.status(404).render('404', {pageTitle: 'Page Not Found',isLoggedIn:req.isLoggedIn});
 })
 
-const PORT = 3003;
+const PORT = 3001;
 // mongoConnect(() => {
 //   app.listen(PORT, () => {
 //   console.log(`Server running on address http://localhost:${PORT}`);

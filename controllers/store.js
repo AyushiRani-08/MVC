@@ -131,6 +131,27 @@ exports.postRemoveFromFavourite = async (req, res, next) => {
   } 
   res.redirect("/favourite");
 };
+// exports.getHomeRules= (req,res,next) => {
+//   if(!req.isLoggedIn){
+//     return res.redirect('/login');
+//   }
+//   const homeId=req.params.homeId;
+//   Home.findById(homeId).then(home => {
+//     if(!home){  
+//       console.log('Home not found');
+//       return res.redirect('/homes');
+//     } 
+//     res.render('store/rules',{
+//       pageTitle:'House Rules',
+//       home:home,    
+//       isLoggedIn:req.isLoggedIn,
+//       user:req.session.user,
+//     })
+//   }).catch(err => {
+//     console.log('Error while finding home for rules',err);
+//     res.redirect('/homes');
+//   }); 
+
 
 exports.getHomes = getHomes;
 // exports.getBookings = this.getBookings;

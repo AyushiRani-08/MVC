@@ -29,8 +29,14 @@ exports.getEditHome = (req, res, next) => {
 };
 
 const postAddHome = (req, res, next) => {
-  const { houseName, price, location, rating, photoUrl ,description } = req.body;
-  const home = new Home({houseName, price, location, rating, photoUrl,description});
+  const { houseName, price, location, rating,description } = req.body;
+  console.log(houseName, price, location, rating,description);
+  console.log(req.file);
+  if(!req.file){
+    return res.status(422).send('Attached file is not an image.');
+  }
+  const photo = '/uploads/' + req.file.filename;
+  const home = new Home({houseName, price, location, rating, photo,description});
   home.save().then(() => {
     console.log('home saved successfully')
   });
@@ -38,14 +44,16 @@ const postAddHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const {houseName, price, location, rating, photoUrl,description,id} = req.body;
+  const {houseName, price, location, rating, photo,description,id} = req.body;
   Home.findById(id).then((home) => {
     home.houseName=houseName,
     home.price=price,
     home.location=location,
     home.rating=rating,
-    home.photoUrl=photoUrl,
-    home.description=description,
+    home.description=description;
+    if(req.file){
+      home.photo=req.file.path;
+    }
     home.save().then((result) =>{
       console.log('home updated :',result);
     })
@@ -53,7 +61,7 @@ exports.postEditHome = (req, res, next) => {
   }).catch(err =>{
     console.log("Error while finding home",err);
   })
-  // const home = new Home(houseName, price, location, rating, photoUrl,description,id);
+  // const home = new Home(houseName, price, location, rating, photo,description,id);
   // home.save().then(result => {
   //   console.log('home updated :',result);
   // });

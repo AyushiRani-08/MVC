@@ -10,12 +10,12 @@
 // const { ObjectId } = require("mongodb");
 
 // module.exports = class Home {
-//   constructor(houseName, price, location, rating, photoUrl, description, _id) {
+//   constructor(houseName, price, location, rating, photo, description, _id) {
 //     this.houseName = houseName;
 //     this.price = price;
 //     this.location = location;
 //     this.rating = rating;
-//     this.photoUrl = photoUrl;
+//     this.photo = photo;
 //     this.description = description;
 //     if (_id) {
 //       this._id = _id;
@@ -24,17 +24,17 @@
 //   save() {
 //     // if (this.id) {
 //     //   //update
-//     //   return db.execute('UPDATE homes SET houseName=? , price=? , location=? , rating =? ,photoUrl=? , description= ? WHERE id =?', [this.houseName,this.price,this.location,this.rating,this.photoUrl,this.description,this.id]);
+//     //   return db.execute('UPDATE homes SET houseName=? , price=? , location=? , rating =? ,photo=? , description= ? WHERE id =?', [this.houseName,this.price,this.location,this.rating,this.photo,this.description,this.id]);
 //     // } else {
 //     //   return db.execute(
-//     //     `INSERT INTO homes (houseName, price, location,rating,photoUrl, description )
+//     //     `INSERT INTO homes (houseName, price, location,rating,photo, description )
 //     //  VALUES (?, ?, ?, ?, ?, ?)`,
 //     //     [
 //     //       this.houseName,
 //     //       this.price,
 //     //       this.location,
 //     //       this.rating,
-//     //       this.photoUrl,
+//     //       this.photo,
 //     //       this.description,
 //     //     ]
 //     //   );
@@ -45,7 +45,7 @@
 //         houseName:this.houseName,
 //         price:this.price,
 //         rating:this.rating,
-//         photoUrl:this.photoUrl,
+//         photo:this.photo,
 //         description:this.description
 //       }
 //       return db.collection("homes").updateOne({ _id: new ObjectId(String(this._id)) },{$set:updateFields});
@@ -86,7 +86,7 @@ const homeSchema=mongoose.Schema({   //aparts from all these anything else can a
   price:{type:Number,required:true},
   location:{type:String,required:true},
   rating:{type:Number,required:true},
-  photoUrl:String,
+  photo:String,
   description:String,
 });
 homeSchema.pre('findOneAndDelete',async function (next){
